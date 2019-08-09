@@ -32,10 +32,10 @@ public class RestRunner implements ApplicationRunner {
 //        String worldResult = restTemplate.getForObject("http://localhost:8080/world", String.class);
 //        System.out.println(worldResult);
 
-        Mono<String> helloMono =  webClient.get().uri("http://localhost:8080/hello")    //nonblocking
+        Mono<String> helloMono =  webClient.get().uri("/hello")    //nonblocking
                 .retrieve()
                 .bodyToMono(String.class);
-        helloMono.subscribe(s -> {
+        helloMono.subscribe(s -> {      //Asyncrouns 비동기적으로 호출
             System.out.println(s);
             if(stopWatch.isRunning()) {
                 stopWatch.stop();
@@ -44,10 +44,10 @@ public class RestRunner implements ApplicationRunner {
             stopWatch.start();
         });
 
-        Mono<String> worldMono = webClient.get().uri("http://localhost:8080/world")
+        Mono<String> worldMono = webClient.get().uri("/world")
                 .retrieve()
                 .bodyToMono(String.class);
-        worldMono.subscribe(s -> {
+        worldMono.subscribe(s -> {  //Asyncrouns 비동기적으로 호출
             System.out.println(s);
             if(stopWatch.isRunning()) {
                 stopWatch.stop();
